@@ -1,6 +1,7 @@
 package sucher;
 import java.util.concurrent.CountDownLatch;
 
+class KoernerMaximal extends SucherImpl implements Runnable {
 	private int maxKoernerZahl;
 	// hier fehlt ein Attribut zur Synchronisation der Sucher
 
