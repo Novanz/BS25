@@ -104,5 +104,10 @@ entkommen.
 
 ## bearbeteKachel()
 
+Wir tauschen schrittweise die Körnerzahlen der Kachel mit der Kachel darunter. Dazu nutzen wit das Exchanger-Objekt.
 
 ## main()
+
+Einen Pool mit 2 Threads erzeugen. Dann die Tauscher initialisieren und starten(mittels execute, weil es sich um
+Runnables und ncht um Callables handelt). Den Pool mit shutdown() beenden, damit keine neue Aufgaben reinkommen. Dann 
+warten, bis alle Threads fertig sind(mittels awaitTermination). Dann die Kachelmatrix ausgeben.
