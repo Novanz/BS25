@@ -34,10 +34,10 @@ import java.util.concurrent.CountDownLatch;
 	}
 
 	private void bearbeiteKachel() {
-		// hier muss die koernerZahl der aktuellen Kachel mit der
+		// hier muss die KoernerZahl der aktuellen Kachel mit der
 		// bisher groessten Koernerzahl (maxKoernerZahl) verglichen
 		// werden. Was soll passieren, wenn die aktuelle Koernerzahl
-		// groesser ist, als maxKoernerZahl??
+		// groesser ist, als maxKoernerZahl?
 	}
 
 	// Konfiguration Territorium
@@ -56,17 +56,17 @@ import java.util.concurrent.CountDownLatch;
 
 		// zwei helfende Sucher muessen hier erzeugt und
 		// auf die Suche geschickt d.h. gestartet werden;
-		// einer nach links , einer nach rechts
+		// einer nach links, einer nach rechts
 		
 		
 		// nun wartet der main Thread darauf,
 		// dass die beiden Sucher fertig werden
 		
 		while (sucherLinks.isAlive() && sucherRechts.isAlive()) {
-            // diese Schleife tut nichts ("aktives Warten")
+            // diese Schleife tut nichts ("aktives Warten").
 			// Warum ist diese Schleife schlecht?
 			// Sie sollen diese Schleife hier ersetzen. Dies
-			// soll mit Hilfe eines CountDownLatch passieren.
+			// soll mithilfe eines CountDownLatch passieren.
 		}
 
 		int maxKoernerZahl = 0;
@@ -77,7 +77,7 @@ import java.util.concurrent.CountDownLatch;
 		// ermittelt und verkuendet werden
 		
 		System.out.println("Die maximale Anzahl an Koernern" + " auf Kacheln in\n"
-				+ "der Reihe, in der ich stehe, betraegt: " + maxKoernerZahl );
+				+ "der Reihe, in der ich stehe, beträgt: " + maxKoernerZahl );
 	}
 
 }

@@ -27,7 +27,7 @@ class KoernerZaehler extends SucherImpl implements Callable<Integer> {
 		// dann sollte diese Objektreferenz den Typ Callable<Integer>
 		// und NICHT KoernerZaehler haben.
 		// Dieses Objekt wir mit der Methode submit dem 
-		// Threadpool zur Ausfuehrung uebereben.
+		// Threadpool zur Ausführung übergeben.
 		// submit liefert ein Future<Integer> Objekt zurueck, das
 		// in dem Set dieFutures gespeichert werden muss.
 						
@@ -39,10 +39,10 @@ class KoernerZaehler extends SucherImpl implements Callable<Integer> {
 		// aus dem Set dieFutures. Dann ruft man auf jedem
 		// dieser Future Objekte die Methode get() auf. Diese Method
 		// liefert die Zahl von Koernern, die es insgesamt in der Zeile
-		// des zugehoerigen Suchers gibt.
+		// des zugehörigen Suchers gibt.
 		// Diese Zahlen muessen in anzahlKoerner aufaddiert werden.
 
-		System.out.println("Die Anzahl der Koerner betraegt: " + anzahlKoerner);
+		System.out.println("Die Anzahl der Koerner beträgt: " + anzahlKoerner);
 	}
 
 	KoernerZaehler(Territorium territorium, int[] startPunkt, Richtung gehRichtung) {
@@ -67,7 +67,7 @@ class KoernerZaehler extends SucherImpl implements Callable<Integer> {
 	private void bearbeiteKachel() {
 		// im Attribut gesamtZahlKoerner werden die koerner Zahlen
 		// der einzelnen Kacheln in der Zeile aufaddiert.
-		// mit gibTerritorium() kann man sich das zum Sucher gehoerige
+		// mit gibTerritorium() kann man sich das zum Sucher gehörige
 		// Territorium Objekt holen. Mit gibKoerner kann man sich die
 		// Koernerzahl der aktuellen Kachel holen. gibPosition gibt die 
 		// Position der aktuellen Kachel des Suchers zurueck.

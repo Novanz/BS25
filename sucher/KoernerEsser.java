@@ -26,7 +26,7 @@ class KoernerEsser extends SucherImpl implements Runnable {
 		Territorium territorium = new Territorium(zahlKoerner);
 		int zahlEsser = 3;
 		// Hier muss ein Thread Pool mit einer festen Anzahl von Threads
-		// erzeugt werden. Wieviele Threads muessen es sein?
+		// erzeugt werden. Wie viele Threads muessen es sein?
 		// Warum duerfen es nicht weniger sein, als die zahl der Esser?
 		ExecutorService dienstleister; 
 		// hier muss noch eine CyclicBarrier erzeugt werden
@@ -36,14 +36,14 @@ class KoernerEsser extends SucherImpl implements Runnable {
 		for (int i = 0; i < zahlEsser; i++) {
 			KoernerEsser esser = new KoernerEsser(
 					new int[] {0,0}, Richtung.RECHTS,territorium, zahlEsser
-					// hier fehlt ein Uebergabeparameter -  welcher?
+					// hier fehlt ein Übergabeparameter - welcher?
 					);
-			// hier muessen die Esser dem ThreadPool zur Ausfuehrung
+			// hier muessen die Esser dem ThreadPool zur Ausführung
 			// uebergeben werden
 		}
 		
 		dienstleister.shutdown();
-		// hier soll der main Thread solange warten, bis der letzte Auftrag
+		// hier soll der main Thread so lange warten, bis der letzte Auftrag
 		// des Thread Pool abgearbeitet ist. Dies gelingt mit einer
 		// Methode von ExecutorService
 		
@@ -78,7 +78,7 @@ class KoernerEsser extends SucherImpl implements Runnable {
 		// Koerner um eins verringern?
 		
 		// Wie kann man die CyclicBarrier verwenden, damit jeder Esser
-		// die urspruengliche Zahl der Koerner sieht?
+		// die ursprüngliche Zahl der Koerner sieht?
 	}
 	
 
