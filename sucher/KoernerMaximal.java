@@ -4,14 +4,14 @@ import java.util.concurrent.CountDownLatch;
 class KoernerMaximal extends SucherImpl implements Runnable {
 	private int maxKoernerZahl;
 	// hier fehlt ein Attribut zur Synchronisation der Sucher
+	private CountDownLatch zaehler;
 
 	KoernerMaximal(int[] aktuellePosition, Richtung richtung, 
-			Territorium territorium
-			// hier fehlt ein Parameter zur Synchronisation der Sucher
+			Territorium territorium,
+			CountDownLatch zaehler // hier fehlt ein Parameter zur Synchronisation der Sucher
 			) {
 		super(aktuellePosition, richtung, territorium);
-		
-		// die Attribute initialisieren
+		this.zaehler = zaehler;
 	}
 
 	private int gibMaxKoernerZahl() {
@@ -27,7 +27,7 @@ class KoernerMaximal extends SucherImpl implements Runnable {
 		} while (istKachel);
 
 		// Auftrag erledigt
-		
+		zaehler.countDown(); // hier wird der CountDownLatch um eins verringert
 		// hier muss etwas programmiert werden, dass dem main
 		// Thread signalisiert, dass einer von beiden Threads
 		// die groesste Koernerzahl von seinen Kacheln 
@@ -39,6 +39,10 @@ class KoernerMaximal extends SucherImpl implements Runnable {
 		// bisher groessten Koernerzahl (maxKoernerZahl) verglichen
 		// werden. Was soll passieren, wenn die aktuelle Koernerzahl
 		// groesser ist, als maxKoernerZahl?
+		int aktuelleKoernerZahl = gibTerritorium().gibKoerner(gibPosition()) ; // Koernerzahl der aktuellen Kachel holen
+		if (aktuelleKoernerZahl > maxKoernerZahl) {
+			maxKoernerZahl = aktuelleKoernerZahl;
+		}
 	}
 
 	// Konfiguration Territorium
@@ -52,31 +56,33 @@ class KoernerMaximal extends SucherImpl implements Runnable {
 
 		CountDownLatch zaehler = new CountDownLatch(2);
 		int[] aktuellePosition = new int[] { 3, 4 };
-		KoernerMaximal sucherLinks;
-		KoernerMaximal sucherRechts;
+		KoernerMaximal sucherLinksi = new KoernerMaximal(aktuellePosition, Richtung.LINKS, territorium, zaehler);
+		KoernerMaximal sucherRechts = new KoernerMaximal(aktuellePosition, Richtung.RECHTS, territorium, zaehler);
 
 		// zwei helfende Sucher muessen hier erzeugt und
 		// auf die Suche geschickt d.h. gestartet werden;
 		// einer nach links, einer nach rechts
+		new Thread(sucherLinksi).start();
+		new Thread(sucherRechts).start();
+
+		try {
+			// hier wartet der main Thread darauf,
+			// dass die beiden Sucher fertig werden
+			zaehler.await(); // wartet, bis der CountDownLatch auf 0 ist
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		
-		
-		// nun wartet der main Thread darauf,
-		// dass die beiden Sucher fertig werden
-		
-		while (sucherLinks.isAlive() && sucherRechts.isAlive()) {
+//		while (sucherLinks.isAlive() && sucherRechts.isAlive()) {
             // diese Schleife tut nichts ("aktives Warten").
 			// Warum ist diese Schleife schlecht?
-			// Sie sollen diese Schleife hier ersetzen. Dies
-			// soll mithilfe eines CountDownLatch passieren.
-		}
 
-		int maxKoernerZahl = 0;
-		
 		// nun sind beide fertig. Die MaxKoerner Zahlen der beiden
 		// Threads koennen verglichen werden
 		// und das Endergebnis kann
 		// ermittelt und verkuendet werden
-		
+		int maxKoernerZahl = Math.max(sucherLinksi.gibMaxKoernerZahl(), sucherRechts.gibMaxKoernerZahl());
+
 		System.out.println("Die maximale Anzahl an Koernern" + " auf Kacheln in\n"
 				+ "der Reihe, in der ich stehe, beträgt: " + maxKoernerZahl );
 	}

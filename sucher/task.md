@@ -46,3 +46,36 @@ Callable<Integer> callable = new Callable<>() {
 Future<Integer> future = pool.submit(callable);
 System.out.println(future.get());
 ```
+
+# 2 Aufgabe: Größte Körnerzahl in einer Zeile ermitteln
+
+## CountDownLatch
+Ein CountDownLatch ist ein Objekt, das einen Integer Wert hat. Dieser Wert wird zunächst
+mit dem Konstruktor festgelegt. Mit der Methode countDown() können Threads diesen Wert
+jeweils um eins erniedrigen. Dies geschieht so lange, bis der Wert null beträgt. Wenn Threads
+die Methode await() aufrufen, bleiben sie so lange in der Methode gefangen, bis der Wert auf
+null abgesenkt wurde. Dann kommen alle gefangenen Threads gleichzeitig aus der await()
+Methode wieder heraus. Ein CountDownLatch, dessen Wert auf null abgesunken ist, kann
+nicht mehr zurückgesetzt werden.
+
+## Idee
+Eine CountDownLatch Objekt wird mit der Anzahl der Sucher initialisiert. Wenn ein Thread eine Wand 
+erreicht, ruft er countDown() auf. Dann wartet er mit await() bis alle andere fertig sind. Sobald 
+der CountDownLatch-Wert null erreicht hat, können die Threads gleichzeitig aus der await() 
+Methode herauskommen und ihre Ergebnisse verarbeiten.
+
+## Unsetzung
+
+### bearbeteKachel()
+
+Aktuelle Anzahl der Körner holen und mit max vergleichen. Wenn die aktuelle Anzahl größer ist, dann
+max auf die aktuelle Anzahl setzen.
+
+### run()
+
+Nach dem Durchlauf der Schleife(Sucher hat eine Wand erreicht) wird countDown() aufgerufen.
+
+### main()
+
+ Sucher initialisieren und starteen. Dann wird await() aufgerufen, um zu warten, bis alle Sucher fertig sind.
+ Dann max ermitteln(z.B. mit Math.max()) und ausgeben.
