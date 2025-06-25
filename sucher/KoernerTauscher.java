@@ -20,22 +20,30 @@ class KoernerTauscher extends SucherImpl {
 		Exchanger<Integer> austauscher = new Exchanger<>();
 		Territorium territorium = new Territorium(koernerZahlen);
 		
-		// Zwei KoernerTauscher Objekte werden erzeugt.
-
-		ExecutorService pool;
-		
 		// Unter pool wird ein FixedThread Pool mit zwei Threads
 		// gespeichert.
-		
+		ExecutorService pool = Executors.newFixedThreadPool(2);
+
+		// Zwei KoernerTauscher Objekte werden erzeugt.
+		KoernerTauscher tauscher1 = new KoernerTauscher(new int[] { 0, 0 }, Richtung.RECHTS, territorium, austauscher);
+		KoernerTauscher tauscher2 = new KoernerTauscher(new int[] { 1, 0 }, Richtung.RECHTS, territorium, austauscher);
+
 		// Dem Thread Pool werden die KoernerTauscher Objekt uebergeben.
+		pool.execute(tauscher1);
+		pool.execute(tauscher2);
 		pool.shutdown();
 		
 		// Es wird mit der Methode awaitTermination darauf gewartet, das 
 		// der Pool beide Aufgaben fertiggestellt hat
+		try {
+			pool.awaitTermination(10, TimeUnit.SECONDS);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
 
 		// das Territorium Objekt soll die Koerner Zahlen auf dem Bildschirm
 		// ausgeben
-
+		territorium.gibKoernerAus();
 	}
 
 	public void run() {
@@ -56,6 +64,13 @@ class KoernerTauscher extends SucherImpl {
 		// exchange uebernommen
 		// mit der Methode setztKoernerZahl wird die Koerner Zahl der
 		// aktuellen Kachel auf den neuen Wert gesetzt
+		int aktuelleKoerner = gibTerritorium().gibKoerner(gibPosition());
+		try {
+			int andereKoerner = austauscher.exchange(aktuelleKoerner);
+			gibTerritorium().setzeKoernerZahl(gibPosition(), andereKoerner);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
 	}
 
 }

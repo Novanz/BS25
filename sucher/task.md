@@ -79,3 +79,30 @@ Nach dem Durchlauf der Schleife(Sucher hat eine Wand erreicht) wird countDown() 
 
  Sucher initialisieren und starteen. Dann wird await() aufgerufen, um zu warten, bis alle Sucher fertig sind.
  Dann max ermitteln(z.B. mit Math.max()) und ausgeben.
+ 
+# 3 Aufgabe: Körnerzahlen von oberer und unterer Zeile tauschen
+
+## Threadpool für Runnable Objekte
+Siehe 1.2.2. An dieser Aufgabe ist zu erkennen, dass man bei einem ExecutorService den
+dort vorhandenen Threads auch Runnable Objekte (und nicht nur Callable Objekte) zum
+Abarbeiten übergeben kann. Dies geschieht mit der Methode execute(Runnable). Werden
+dem ExecutorService mehr Runnable Objekte übergeben, als gerade abgearbeitet werden
+können, dann werden die überschüssigen Runnable Objekte in einer Queue gespeichert.
+Sobald die Threads im ExecutorService mit einem Runnable fertig sind, holen sie das
+nächste Runnable aus der Queue und bearbeiten es.
+
+## Exchanger
+Mit einem Exchanger Objekt können zwei Threads zwei Werte austauschen. Wenn ein
+Thread A die exchange(Integer) Methode eines Exchanger<Integer> Objekts aufruft,
+wird er so lange in der Methode festgehalten, bis ein weiterer Thread B ebenfalls die
+exchange(Integer) Methode desselben Exchanger Objekts aufruft. Angenommen Thread A
+hat der exchange Methode den Wert 2 übergeben und Thread B hat der exchange Methode
+den Wert 3 übergeben. Dann erhält Thread A den Wert 3 von Thread B als Rückgabewert der
+exchange Methode. Umgekehrt erhält Thread B den Wert 2von Thread A als Rückgabewert.
+Damit haben die Threads die Werte ausgetauscht und können der exchange Methode beide
+entkommen.
+
+## bearbeteKachel()
+
+
+## main()
