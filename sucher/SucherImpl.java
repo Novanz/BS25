@@ -51,8 +51,7 @@ class SucherImpl extends Thread implements Sucher {
 
     @Override
     public boolean bewege() {
-        int[] moeglichePosition = gibTerritorium().
-                gibNeuePosition(gibGehRichtung(), gibPosition());
+        int[] moeglichePosition = gibTerritorium().gibNeuePosition(gibGehRichtung(), gibPosition());
 
         if (territorium.istKachel(moeglichePosition)) {
             bewege(gibGehRichtung());
